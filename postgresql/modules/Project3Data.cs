@@ -16,8 +16,8 @@ namespace postgresql.modules
     {
       Get("api/crime", parameters =>
       {
-        var list2 = getCrime();
-        return Response.AsJson(list2);
+        var list = getCrime();
+        return Response.AsJson(list);
       });
 
     }
