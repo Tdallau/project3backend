@@ -20,6 +20,12 @@ namespace postgresql.modules
         return Response.AsJson(list);
       });
 
+      Get("api/work", parameters =>
+      {
+        var list = getWork();
+        return Response.AsJson(list);
+      });
+
     }
 
     private List<Crime> getCrime()
@@ -41,7 +47,31 @@ namespace postgresql.modules
       {
         result.Add(Crime.FromDataReader(dr));
       }
+      conn.Close();
        
+      return result;
+    }
+    private List<Work> getWork()
+    {
+      conn.Open();
+
+      string sql = "SELECT work_value.id as id, work_value.isseasoncorrected as isseasoncorrected, work_value.amount as amount, work_date.year as year, work_date.period as period, work_branch.name as branch_name, work_worker_type.name as worker_type_name, work_value_type.name as value_type_name "+
+      "FROM work_value "+
+      "JOIN work_date ON work_value.workdateid = work_date.id "+
+      "JOIN work_branch ON work_date.branchid = work_branch.id "+
+      "JOIN work_worker_type ON work_date.workertypeid = work_worker_type.id "+
+      "JOIN work_value_type ON work_value.amounttype = work_value_type.id";
+
+      NpgsqlCommand command = new NpgsqlCommand(sql, conn);
+      NpgsqlDataReader dr = command.ExecuteReader();
+
+      var result = new List<Work>();
+      // Output rows
+      while (dr.Read())
+      {
+        result.Add(Work.FromDataReader(dr));
+      }
+      conn.Close();
       return result;
     }
 }
