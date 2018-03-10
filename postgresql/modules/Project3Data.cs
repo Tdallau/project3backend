@@ -26,6 +26,12 @@ namespace postgresql.modules
         return Response.AsJson(list);
       });
 
+      Get("api/education", parameters =>
+      {
+        var list = getEducation();
+        return Response.AsJson(list);
+      });
+
     }
 
     private List<Crime> getCrime()
@@ -72,6 +78,28 @@ namespace postgresql.modules
         result.Add(Work.FromDataReader(dr));
       }
       conn.Close();
+      return result;
+    }
+    private List<Education> getEducation()
+    {
+      conn.Open();
+
+      string sql = "SELECT education_value.id as id, year, amount, education_gender.name as gender, education_type.name as educationType "+
+      "FROM education_value, education_gender, education_type "+
+      "WHERE education_value.genderid = education_gender.id AND "+
+      "education_value.educationtype = education_type.id";
+
+      NpgsqlCommand command = new NpgsqlCommand(sql, conn);
+      NpgsqlDataReader dr = command.ExecuteReader();
+
+      var result = new List<Education>();
+      // Output rows
+      while (dr.Read())
+      {
+        result.Add(Education.FromDataReader(dr));
+      }
+      conn.Close();
+       
       return result;
     }
 }
