@@ -12,6 +12,8 @@ namespace postgresql.model
         public int amount {get; set;}
         public string gender {get; set;}
         public string educationType { get; set;}
+        public string label {get; set; }
+        public string color {get; set;}
         public static Education FromDataReader(IDataReader dr)
         {
             return new Education()
@@ -21,6 +23,8 @@ namespace postgresql.model
                 amount = Convert.ToInt32(dr["amount"]),
                 gender = dr["gender"].ToString(),
                 educationType = dr["educationType"].ToString(),
+                label = "Education",
+                color = "#3fda0a"
             };
         }
     }

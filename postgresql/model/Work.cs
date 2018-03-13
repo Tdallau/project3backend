@@ -16,6 +16,8 @@ namespace postgresql.model
     public string branch_name { get; set;  }
     public string worker_type_name { get; set;  }
     public string value_type_name { get; set;  }
+    public string label {get; set; }
+    public string color {get; set;}
 
     public static Work FromDataReader(IDataReader dr)
     {
@@ -28,7 +30,9 @@ namespace postgresql.model
         period = dr["period"].ToString(),
         branch_name = dr["branch_name"].ToString(),
         worker_type_name  = dr["worker_type_name"].ToString(),
-        value_type_name = dr["value_type_name"].ToString()
+        value_type_name = dr["value_type_name"].ToString(),
+        label = "Work",
+        color = "#3fda9f"
       };
     }
 
