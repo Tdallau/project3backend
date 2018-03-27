@@ -20,7 +20,7 @@ namespace postgresql.modules
         return defaultVal;
     }
     private int getWithDefault(int post,int defaultVal){
-        if(post!=null){return post;}
+        if(post==1 || post==0){return post;}
         return defaultVal;
     }
     public Project3Data()
@@ -68,6 +68,12 @@ namespace postgresql.modules
         }
 
         var list = getEducation(gender,this.getWithDefault(postData.eduTypeName,"Totaal"));
+        return Response.AsJson(list);
+      });
+
+      Get("api/crime-types", parameters =>
+      {
+        var list = getCrimeType();
         return Response.AsJson(list);
       });
 
@@ -191,6 +197,24 @@ namespace postgresql.modules
       while (dr.Read())
       {
         result.Add(Education.FromDataReader(dr));
+      }
+      conn.Close();
+       
+      return result;
+    }
+
+    private List<CrimeType> getCrimeType() {
+      conn.Open();
+      string sql = "SELECT id, name FROM crime_type";
+
+      NpgsqlCommand command = new NpgsqlCommand(sql, conn);
+      NpgsqlDataReader dr = command.ExecuteReader();
+
+      var result = new List<CrimeType>();
+      // Output rows
+      while (dr.Read())
+      {
+        result.Add(CrimeType.FromDataReader(dr));
       }
       conn.Close();
        
