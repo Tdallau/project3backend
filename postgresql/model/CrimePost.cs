@@ -9,5 +9,6 @@ namespace postgresql.model
   public class CrimePost
   {
       public string crime_end_type {get; set;}
+      public string crime_type_name {get;set;}
   }
 }

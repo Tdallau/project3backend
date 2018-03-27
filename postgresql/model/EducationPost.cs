@@ -9,5 +9,6 @@ namespace postgresql.model
   public class EducationPost
   {
       public string gender {get; set;}
+      public string eduTypeName {get; set;}
   }
 }
