@@ -10,7 +10,7 @@ using System.Web;
 namespace postgresql
 {
     public class CustomBootstrapper : AutofacNancyBootstrapper {
-        protected override void ApplicationStartup(ILifetimeScope container, IPipelines pipelines)
+		protected override void ApplicationStartup(ILifetimeScope container, IPipelines pipelines)
         {
         pipelines.AfterRequest += ctx =>
         {
