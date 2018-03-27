@@ -77,6 +77,12 @@ namespace postgresql.modules
         return Response.AsJson(list);
       });
 
+       Get("api/education-types", parameters =>
+      {
+        var list = getEducationType();
+        return Response.AsJson(list);
+      });
+
     }
 
     private List<Crime> getCrime(string crime_end_type,string crime_type_name)
@@ -206,6 +212,24 @@ namespace postgresql.modules
     private List<CrimeType> getCrimeType() {
       conn.Open();
       string sql = "SELECT id, name FROM crime_type";
+
+      NpgsqlCommand command = new NpgsqlCommand(sql, conn);
+      NpgsqlDataReader dr = command.ExecuteReader();
+
+      var result = new List<CrimeType>();
+      // Output rows
+      while (dr.Read())
+      {
+        result.Add(CrimeType.FromDataReader(dr));
+      }
+      conn.Close();
+       
+      return result;
+    }
+
+    private List<CrimeType> getEducationType() {
+      conn.Open();
+      string sql = "SELECT id, name FROM education_type";
 
       NpgsqlCommand command = new NpgsqlCommand(sql, conn);
       NpgsqlDataReader dr = command.ExecuteReader();
