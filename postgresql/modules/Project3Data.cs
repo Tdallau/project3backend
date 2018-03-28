@@ -153,7 +153,7 @@ namespace postgresql.modules
       ON work_value.amounttype = work_value_type.id
       
       WHERE work_value.isseasoncorrected = :isSeasonCorrected
-      
+      AND work_date.period IS NULL 
       AND work_value_type.name = :wvtName
       AND work_worker_type.name = :typeName
       AND work_branch.name = :branch
