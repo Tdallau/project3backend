@@ -66,6 +66,10 @@ namespace postgresql.modules
                 var list = Types.getTypes(conn,"SELECT id, name FROM crime_type");
                 return Response.AsJson(list);
             });
+            Get("api/work-types", parmeters => {
+                var list = Types.getTypes(conn,"SELECT id, name FROM work_value_type");
+                return Response.AsJson(list);
+            });
 
         }
 
